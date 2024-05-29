@@ -1,0 +1,25 @@
+// Pass-through sketch to configure GPS module using u-center
+// Connect the GPS module to the appropriate serial pins on the Teensy 4.1
+
+void setup() {
+  // Initialize hardware serial port (USB) for u-center connection
+  Serial.begin(115200);
+
+  // Initialize hardware serial port for GPS module
+  Serial1.begin(9600); // Default baud rate for many GPS modules
+
+  // Print a message to the serial monitor
+  Serial.println("Teensy pass-through for u-center configuration");
+}
+
+void loop() {
+  // Pass data from GPS to Serial (u-center)
+  if (Serial1.available()) {
+    Serial.write(Serial1.read());
+  }
+
+  // Pass data from Serial (u-center) to GPS
+  if (Serial.available()) {
+    Serial1.write(Serial.read());
+  }
+}
